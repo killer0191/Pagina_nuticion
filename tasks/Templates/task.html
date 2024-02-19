@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proyecto Nutrición</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    />
+    <style>
+      .gradient-bg {
+        /*background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));*/
+      }
+
+      .main-content {
+        color: black;
+        text-align: center;
+        font-family: "Arial", sans-serif;
+      }
+
+      .main-content h1 {
+        font-size: 3.5rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+      }
+
+      .main-content p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+
+      .btn-primary {
+        background-color: #28a745;
+        border-color: #28a745;
+        font-size: 1.2rem;
+        padding: 0.75rem 2rem;
+      }
+
+      .card-section {
+        background-color: #f2f2f2;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 1);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .animate-opacity {
+        opacity: 1;
+        transition: opacity 1s ease-in-out;
+      }
+
+      .animate-opacity.hide {
+        opacity: 0;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var paragraphs = document.querySelectorAll(".main-content p");
+
+        function isInViewport(element) {
+          var rect = element.getBoundingClientRect();
+          return (
+            rect.top <= window.innerHeight / 2 &&
+            rect.bottom >= window.innerHeight / 2
+          );
+        }
+
+        function toggleVisibility() {
+          paragraphs.forEach(function (paragraph, index) {
+            if (isInViewport(paragraph)) {
+              paragraph.classList.remove("hide");
+            } else {
+              // Oculta el párrafo si no está en la mitad de la pantalla
+              paragraph.classList.add("hide");
+            }
+          });
+        }
+
+        toggleVisibility();
+
+        window.addEventListener("scroll", toggleVisibility);
+      });
+    </script>
+  </head>
+  <body>
+    {% extends 'base.html' %} {% block content %}
+    <main class="container py-5 gradient-bg main-content">
+      <section class="card card-body card-section">
+        <h1 class="display-1 text-center mb-5">
+          ACTIVIDADES DE ACONDICIONAMIENTO SEGÚN TU IMC
+        </h1>
+        <p class="animate-opacity">
+          El índice de masa corporal (IMC) es una relación que se calcula con
+          base en el peso y la estatura de la persona. El IMC es uno de los
+          indicadores del estado nutricional el cual es bastante confiable para
+          la mayoría de las personas. El IMC, si bien no mide la grasa corporal
+          directamente, estudios poblacionales han demostrado que tiene una
+          correlación con mediciones directas de la grasa corporal, tales como
+          el pesaje bajo el agua y la absorciometría dual de rayos X (DXA). Es
+          un método económico y fácil de realizar.
+        </p>
+        <h3 class="display-6 animate-opacity">
+          ¿Es confiable el IMC como indicador de obesidad?
+        </h3>
+        <p class="animate-opacity">
+          La correlación entre el número del IMC y la grasa abdominal es
+          estrecha; sin embargo, la correlación varía según sexo, la raza y la
+          edad. A igual IMC, las mujeres tienden a tener más grasa corporal que
+          los hombre, las personas de edad avanzada, en promedio, tienden a
+          tener más grasa corporal que los adultos más jóvenes. Los atletas que
+          entrenan mucho pueden tener un IMC alto por la mayor masa muscular, en
+          relación con la grasa corporal. Cabe destacar que el IMC es solo uno
+          de los factores relacionados con los riesgos de enfermedades. Para
+          evaluar las probabilidades de que una persona padezca enfermedades
+          relacionadas con el sobrepeso o la obesidad, el Instituto Nacional del
+          Corazón, el Pulmón y Hematológica recomiendan observar otros
+          indicadores.
+        </p>
+        <h3 class="display-6 animate-opacity">Ejercicios según tu IMC</h3>
+        <p class="animate-opacity">
+          Bajo peso: En este caso, lo lógico es que queráis ganar peso. Y para
+          ello lo mejor es ganar masa muscular; eso sí, si eres una persona
+          delgada, tienes que tener mucho cuidado al principio, ya que no podrás
+          levantar cargas muy pesadas. Los mejores ejercicios son los que
+          afectan a los grandes grupos musculares: press de banca, sentadillas y
+          press de hombros. Estos tres ejercicios conforman una buena rutina
+          para ganar peso.
+          <br />
+          <br />
+          Sobrepeso: Ahora la cosa cambia, el IMC indica que tienes sobrepeso y,
+          obviamente, queréis bajar kilos. Deportes como el atletismo, ciclismo
+          o natación son buenos para perder peso, pero deben estar acompañados
+          de otros ejercicios, por ejemplo estos: rotación de tronco,
+          sentadillas y remo. Un buen sistema es, entre ejercicio y ejercicio,
+          subirse 30 segundos a la cinta o a la bicicleta elíptica.
+          <br />
+          <br />
+          Obesidad: Y se llega al tercer nivel, cuando el IMC muestra obesidad.
+          Se recomienda comenzar haciendo ejercicios de lunes a viernes, 30
+          minutos diarios, es decir, 150 minutos a la semana. Más allá de una
+          rutina concreta, estos son algunos ejercicios buenos para personas
+          obesas: caminar, correr, nadar, bailar… Esto en cuanto a ejercicios
+          anaeróbicos, pero deben acompañarse de aeróbicos como yoga, pesas o
+          abdominales.
+        </p>
+        <div class="container">
+          <a
+            href="https://musclewiki.com/directory"
+            target="_blank"
+            class="btn btn-primary"
+            ><em>Videos de ejercicios</em></a
+          >
+        </div>
+      </section>
+    </main>
+    {% endblock %}
+  </body>
+</html>

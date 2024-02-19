@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <style>
+      .fade-in {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .fade-in-active {
+        opacity: 1;
+      }
+      #singin-form {
+        margin-bottom: 50px;
+      }
+    </style>
+
+    <script>
+      window.onload = function () {
+        var signInForm = document.getElementById("singin-form");
+        signInForm.classList.add("fade-in-active");
+      };
+
+      function togglePassword() {
+        var passwordField = document.getElementById("password");
+        var toggleButton = document.getElementById("toggle-password");
+        if (passwordField.type === "password") {
+          passwordField.type = "text";
+          toggleButton.innerHTML = '<i class="fas fa-eye-slash"></i>'; // Cambia el icono a ojo tachado
+        } else {
+          passwordField.type = "password";
+          toggleButton.innerHTML = '<i class="fas fa-eye"></i>'; // Cambia el icono a ojo
+        }
+      }
+
+      setTimeout(function () {
+        var errorMessage = document.getElementById("error-message");
+        if (errorMessage) {
+          errorMessage.style.display = "none";
+        }
+      }, 5000); // 5000 milisegundos = 5 segundos
+    </script>
+  </head>
+
+  <body>
+    {% extends 'base.html' %} {% block content %}
+    <main class="container">
+      <div class="row">
+        <section class="col-md-4 offset-md-4 mt-5 fade-in" id="singin-form">
+          <form action="/singin/" method="POST">
+            <div class="card card-body shadow">
+              <div class="text-center mb-4">
+                <img
+                  src="https://www.equiponutricional.com.ar/assets/images/logo-1.png"
+                  alt="Logo"
+                  width="120"
+                />
+              </div>
+              <h1 class="text-center mb-4">Iniciar sesión</h1>
+              {% if error %}
+              <div id="error-message" class="alert alert-danger">{{error}}</div>
+              {% endif %} {% csrf_token %}
+              <div class="mb-3">
+                <label for="username" class="form-label">Usuario:</label>
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  class="form-control"
+                  placeholder="Escriba su nombre de usuario"
+                />
+              </div>
+              <div class="mb-3 position-relative">
+                <label for="password" class="form-label">Contraseña:</label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  class="form-control"
+                  placeholder="Escriba su contraseña"
+                />
+                <!-- Botón con icono de Font Awesome -->
+                <button
+                  type="button"
+                  id="toggle-password"
+                  class="btn btn-link position-absolute end-0 top-50 translate-y-50"
+                  onclick="togglePassword()"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+              <button class="btn btn-primary btn-block mb-3">
+                Iniciar sesión
+              </button>
+              <div class="text-center">
+                <p>¿No cuentas con una cuenta?</p>
+                <a href="/singup/" class="btn btn-outline-primary">Cree una</a>
+              </div>
+            </div>
+          </form>
+        </section>
+      </div>
+    </main>
+    {% endblock %}
+  </body>
+</html>

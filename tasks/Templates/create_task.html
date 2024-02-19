@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <style>
+      .fade-in {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .fade-in-active {
+        opacity: 1;
+      }
+      #create-task-form {
+        margin-bottom: 50px;
+      }
+    </style>
+    <script>
+      window.onload = function () {
+        var createTaskForm = document.getElementById("create-task-form");
+        createTaskForm.classList.add("fade-in-active");
+      };
+    </script>
+  </head>
+  <body>
+    {% extends 'base.html' %} {% block content %}
+    <main class="container">
+      <div class="row">
+        <section
+          class="col-md-5 offset-md-4 mt-5 fade-in"
+          id="create-task-form"
+        >
+          <form
+            action="/task/create/"
+            method="POST"
+            class="card card-body shadow"
+          >
+            <h1 class="text-center">Información personal</h1>
+            {{error}} {% csrf_token %} {{form.as_p}} {{formS.as_p}}
+            {{formL.as_p}} {{formC.as_p}}
+
+            <button class="btn btn-primary btn-block mt-3">Guardar</button>
+          </form>
+        </section>
+      </div>
+    </main>
+    {% endblock %}
+  </body>
+</html>
