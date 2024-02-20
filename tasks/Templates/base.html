@@ -75,8 +75,12 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a href="/calc" class="nav-link">Programa</a>
+            </li>
             <!--Si el usuario ya inicio sesión (se autentico) verá las siguientes opciones en su barra de navegación-->
             {% if user.is_authenticated %}
             <li class="nav-item">
