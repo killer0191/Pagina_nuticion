@@ -42,6 +42,16 @@
         background-position: center;
       }
 
+      .btn-print {
+        background-color: #28a745;
+        border-color: #28a745;
+        font-size: 1.2rem;
+        padding: 0.75rem 2rem;
+        background-image: url("https://icons.iconarchive.com/icons/designbolts/free-multimedia/1024/Printer-icon.png");
+        background-size: cover;
+        background-position: center;
+      }
+
       .btn-danger {
         background-color: #dc3545;
         border-color: #dc3545;
@@ -106,7 +116,26 @@
         text-decoration: none;
         color: black;
       }
+      .exercise-title {
+        font-size: 2rem; /* Tamaño del texto */
+        font-weight: bold; /* Negrita */
+        color: #333; /* Color del texto */
+        margin-bottom: 20px; /* Espacio inferior */
+        text-transform: uppercase; /* Convertir texto a mayúsculas */
+      }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const exerciseTitleElement = document.querySelector(".exercise-title");
+        const urlParams = new URLSearchParams(window.location.search);
+        const exerciseTitle = urlParams.get("exercise_title");
+
+        if (exerciseTitle) {
+          exerciseTitleElement.textContent = exerciseTitle;
+        }
+      });
+    </script>
     <script>
       window.onload = function () {
         var signInForm = document.getElementById("singin-form");
@@ -186,6 +215,8 @@
                   throw new Error("Error al guardar el video.");
                 }
                 console.log(response); // Mostrar la respuesta en la consola
+                // Mostrar la ventana emergente de felicitación y motivación
+                $("#successModal").modal("show");
               })
               .catch((error) => {
                 console.error("Error:", error);
@@ -214,6 +245,8 @@
                 throw new Error("Error al guardar el video.");
               }
               console.log(response); // Mostrar la respuesta en la consola
+              // Mostrar la ventana emergente de felicitación y motivación
+              $("#successModal").modal("show");
             })
             .catch((error) => {
               console.error("Error:", error);
@@ -250,6 +283,42 @@
       </section>
     </main>
 
+    <!-- Ventana emergente de felicitación y motivación -->
+    <div
+      class="modal fade"
+      id="successModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              ¡Grabación Exitosa!
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>¡Felicidades! Has completado la grabación satisfactoriamente.</p>
+            <p>¡Sigue así y nunca te rindas!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-print" data-bs-dismiss="modal">
+              Imprimir resultados
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
   </body>
 </html>
