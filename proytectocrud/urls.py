@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from tasks import views
+from tasks.views import guardar_video
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +27,8 @@ urlpatterns = [
     path('singin/', views.singin, name = 'singin'),
     path('task/create/', views.create_task, name = 'create_task'),
     path('calc/', views.calc, name = 'calc'),
+    path('program/', views.program, name = 'program'),
+    path('exercises/', views.exercises, name = 'exercises'),
+    path('practic/', views.practic, name = 'practic'),
+    path('guardar_video/', guardar_video, name='guardar_video'),
 ]

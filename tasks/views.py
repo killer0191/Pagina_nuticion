@@ -7,12 +7,19 @@ from .forms import TaskForm, TaskSobrepeso, TaskLocalidad, TaskCurso
 from .models import Task, Sobrepeso, Localidad, Curso
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+import os
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
 # Vista de inicio
 def home(request):
     return render(request, 'home.html')
+  
+  # Vista de programa
+def program(request):
+    return render(request, 'program.html')
 
 # Vista de creación e inicio de usuario
 def singup(request):
@@ -44,6 +51,42 @@ def singup(request):
 @login_required
 def task(request):
     return render(request, 'task.html',)
+  
+  # Vista de ejercicios
+@login_required
+def exercises(request):
+    return render(request, 'exercises.html')
+
+  # Vista de rutina
+@login_required
+def practic(request):
+    return render(request, 'practic.html')
+
+# Función para guardar el video
+import os
+
+@csrf_exempt
+def guardar_video(request):
+    try:
+        if request.method == 'POST' and request.FILES['video']:
+            video = request.FILES['video']
+            # Verificar si la carpeta 'video' existe, si no, crearla
+            video_dir = os.path.join(os.getcwd(), 'video')
+            if not os.path.exists(video_dir):
+                os.makedirs(video_dir)
+
+            video_path = os.path.join(video_dir, 'grabacion.webm')  # Ruta donde se guardará el video
+            with open(video_path, 'wb+') as destination:
+                for chunk in video.chunks():
+                    destination.write(chunk)
+            print(f'Video guardado exitosamente en: {video_path}')  # Imprimir la ruta completa
+            return HttpResponse('Video guardado exitosamente.')
+        else:
+            return HttpResponse('No se ha enviado ningún video.')
+    except Exception as e:
+        print(f'Error al guardar el video: {str(e)}')
+        return HttpResponse(f'Error al guardar el video: {str(e)}')
+
 
 # Vista de creación de los "Tasks"
 @login_required

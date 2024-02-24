@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proyecto Nutrición</title>
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://i.imgur.com/ynaxQQu.jpeg"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    />
+    <style>
+      .main-content {
+        color: black;
+        text-align: center;
+        font-family: "Arial", sans-serif;
+      }
+
+      .main-content h1 {
+        font-size: 3.5rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+      }
+
+      .main-content p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+
+      .btn-primary {
+        background-color: #28a745;
+        border-color: #28a745;
+        font-size: 1.2rem;
+        padding: 0.75rem 2rem;
+      }
+
+      .card-section {
+        background-color: #f2f2f2;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 1);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .animate-opacity {
+        opacity: 1;
+        transition: opacity 1s ease-in-out;
+      }
+
+      .animate-opacity.hide {
+        opacity: 0;
+      }
+      .card-header {
+        background-color: #f2f2f2;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .card-title {
+        display: inline;
+        margin-left: 10px;
+      }
+
+      .icon {
+        width: 30px; /* Tamaño del icono */
+        height: auto; /* Altura automática para mantener la proporción */
+        vertical-align: middle; /* Alineación vertical con el texto */
+      }
+      .card-title-small {
+        font-size: 1rem; /* Tamaño pequeño del título */
+      }
+
+      .card-title-medium {
+        font-size: 1.5rem; /* Tamaño mediano del título */
+      }
+
+      .card-title-large {
+        font-size: 2rem; /* Tamaño grande del título */
+      }
+      .card {
+        transition: transform 0.3s ease; /* Transición suave de 0.3 segundos */
+      }
+
+      .inner-card:hover {
+        transform: scale(1.05);
+      }
+      a {
+        text-decoration: none;
+        color: black;
+      }
+    </style>
+    <script>
+      window.onload = function () {
+        var signInForm = document.getElementById("singin-form");
+        signInForm.classList.add("fade-in-active");
+      };
+
+      setTimeout(function () {
+        var errorMessage = document.getElementById("error-message");
+        if (errorMessage) {
+          errorMessage.style.display = "none";
+        }
+      }, 5000); // 5000 milisegundos = 5 segundos
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var paragraphs = document.querySelectorAll(".main-content p");
+
+        function isInViewport(element) {
+          var rect = element.getBoundingClientRect();
+          return (
+            rect.top <= window.innerHeight / 2 &&
+            rect.bottom >= window.innerHeight / 2
+          );
+        }
+
+        function toggleVisibility() {
+          paragraphs.forEach(function (paragraph, index) {
+            if (isInViewport(paragraph)) {
+              paragraph.classList.remove("hide");
+            } else {
+              // Oculta el párrafo si no está en la mitad de la pantalla
+              paragraph.classList.add("hide");
+            }
+          });
+        }
+
+        toggleVisibility();
+
+        window.addEventListener("scroll", toggleVisibility);
+      });
+    </script>
+  </head>
+  <body>
+    {% extends 'base.html' %} {% block content %}
+
+    <main class="container py-5 gradient-bg main-content">
+      <section class="card card-body card-section fade-in" id="singin-form">
+        <div class="text-center mb-5">
+          <h1 class="display-1">Programas de ejercicios</h1>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <a href="/exercises?selected_card=1">
+              <div class="card card-body card-section inner-card">
+                <div class="card-header">
+                  <img
+                    src="https://cdn1.iconfinder.com/data/icons/chunk/16/X-1024.png"
+                    alt="Icono "
+                    class="icon"
+                  />
+                  <h2 class="card-title card-title-medium">Card 1 Title</h2>
+                </div>
+                <div class="card-body">
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus lacinia, odio a elementum vestibulum, augue ex
+                    sollicitudin augue, vel accumsan nisi augue vel nunc.
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-4">
+            <a href="/exercises?selected_card=2">
+              <div class="card card-body card-section inner-card">
+                <div class="card-header">
+                  <img
+                    src="https://cdn1.iconfinder.com/data/icons/chunk/16/X-1024.png"
+                    alt="Icono"
+                    class="icon"
+                  />
+                  <h2 class="card-title card-title-medium">Card 2 Title</h2>
+                </div>
+                <div class="card-body">
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus lacinia, odio a elementum vestibulum, augue ex
+                    sollicitudin augue, vel accumsan nisi augue vel nunc.
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-4">
+            <a href="/exercises?selected_card=3">
+              <div class="card card-body card-section inner-card">
+                <div class="card-header">
+                  <img
+                    src="https://cdn1.iconfinder.com/data/icons/chunk/16/X-1024.png"
+                    alt="Icono"
+                    class="icon"
+                  />
+                  <h2 class="card-title card-title-medium">Card 3 Title</h2>
+                </div>
+                <div class="card-body">
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus lacinia, odio a elementum vestibulum, augue ex
+                    sollicitudin augue, vel accumsan nisi augue vel nunc.
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    {% endblock %}
+  </body>
+</html>
