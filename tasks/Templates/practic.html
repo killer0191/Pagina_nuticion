@@ -13,6 +13,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
     />
+  
     <style>
       .main-content {
         color: black;
@@ -32,7 +33,7 @@
         margin-bottom: 1.5rem;
       }
 
-      .btn-primary {
+      /*.btn-primary {
         background-color: #28a745;
         border-color: #28a745;
         font-size: 1.2rem;
@@ -40,7 +41,7 @@
         background-image: url("https://icon-library.com/images/start-button-icon-png/start-button-icon-png-13.jpg");
         background-size: cover;
         background-position: center;
-      }
+      }*/
 
       .btn-print {
         background-color: #28a745;
@@ -52,7 +53,7 @@
         background-position: center;
       }
 
-      .btn-danger {
+     /* .btn-danger {
         background-color: #dc3545;
         border-color: #dc3545;
         font-size: 1.2rem;
@@ -60,7 +61,7 @@
         background-image: url("https://pngimg.com/uploads/sign_stop/sign_stop_PNG25628.png");
         background-size: cover;
         background-position: center;
-      }
+      }*/
 
       .card-section {
         background-color: #f2f2f2;
@@ -184,17 +185,17 @@
         let mediaRecorder;
         let chunks = [];
 
-        startBtn.addEventListener("click", startRecording);
-        stopBtn.addEventListener("click", stopRecording);
+        //startBtn.addEventListener("click", startRecording);
+        //stopBtn.addEventListener("click", stopRecording);
 
-        navigator.mediaDevices
+        /*navigator.mediaDevices
           .getUserMedia({ video: true })
           .then(function (stream) {
             video.srcObject = stream;
           })
           .catch(function (error) {
             console.error("Error al acceder a la cámara:", error);
-          });
+          });*/
 
         function startRecording() {
           chunks = [];
@@ -254,11 +255,31 @@
         }
       });
     </script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    .gradient-bg {
+      background: linear-gradient(45deg, #6db3f2, #1e69de);
+      color: white;
+    }
+    .card-section {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .fade-in {
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
   </head>
   <body>
     {% extends 'base.html' %} {% block content %}
 
-    <main class="container py-5 gradient-bg main-content">
+    <!-- <main class="container py-5 gradient-bg main-content">
       <section class="card card-body card-section fade-in" id="singin-form">
         <div class="text-center mb-5">
           <h1 class="display-1">Programas de ejercicios</h1>
@@ -267,13 +288,13 @@
 
         <form id="video-form" method="post" enctype="multipart/form-data">
           {% csrf_token %}
-          <!-- Contenedor del video -->
+
           <div class="video-container">
             <video id="video-preview" autoplay></video>
           </div>
 
           <div class="col-md-12">
-            <!-- Botones -->
+
             <button class="btn btn-primary" id="start-btn">Iniciar</button>
             <button class="btn btn-danger" id="stop-btn" disabled>
               Detener
@@ -281,7 +302,62 @@
           </div>
         </form>
       </section>
-    </main>
+    </main> -->
+
+    {% load static %}
+      <script  src="{% static "js/p5.min.js" %}"></script>
+      <script src="{% static "js/p5.dom.min.js" %}"></script>
+      <script src="{% static "js/ml5.min.js" %}" type="text/javascript"></script>
+
+    <main class="container py-5  main-content">
+    <section class="card card-body card-section fade-in" id="singin-form">
+      <div class="text-center mb-5">
+        <h1 class="display-1">Programas de Ejercicios</h1>
+      </div>
+      <div class="exercise-title mb-4"></div>
+        <div class="mb-3">
+        <label for="strokeWeight" class="form-label">Stroke Weight</label>
+        <input type="number" id="strokeWeight" class="form-control" placeholder="Stroke Weight" value="8">
+      </div>
+      <div class="mb-4">
+        <label for="strokeLineColor" class="form-label">Stroke Line Color (hex)</label>
+        <input type="color" id="strokeLineColor" class="form-control" placeholder="#FF0000" value="#0033ff">
+      </div>
+       <div class="row align-items-center">
+  <div class="col-md-9 text-center" id="videoContainer"></div>
+  <div class="col-md-3 d-flex justify-content-center align-items-center gif-container">
+    <img src="{% static 'img/pierna.gif' %}" alt="GIF" class="img-fluid">
+  </div>
+</div>
+
+      
+      <div class="d-flex justify-content-center mb-4">
+        <button id="addClassA" class="btn btn-primary me-2">Add an Example to Class A</button>
+        <button id="resetA" class="btn btn-danger">Reset Class A</button>
+      </div>
+      <p class="text-center"><span id="exampleA" class="badge bg-primary">0</span> A examples</p>
+      <p class="text-center">| Confidence in A is: <span id="confidenceA" class="badge bg-success">0</span></p>
+      <div class="d-flex justify-content-center mb-4">
+        <button id="addClassB" class="btn btn-primary me-2">Add an Example to Class B</button>
+        <button id="resetB" class="btn btn-danger">Reset Class B</button>
+      </div>
+      <p class="text-center"><span id="exampleB" class="badge bg-primary">0</span> B examples</p>
+      <p class="text-center">| Confidence in B is: <span id="confidenceB" class="badge bg-success">0</span></p>
+      <div class="d-flex justify-content-center mb-4">
+        <button id="buttonPredict" class="btn btn-warning me-2">Start predicting!</button>
+        <button id="downloadAndClear" class="btn btn-success me-2">Download files</button>
+        <button id="clearAll" class="btn btn-secondary">Clear all classes</button>
+      </div>
+      <p class="text-center">
+        KNN Classifier with mobileNet model labeled this as Class:
+        <span id="result" class="badge bg-info">...</span> with a confidence of
+        <span id="confidence" class="badge bg-info">...</span>
+      </p>
+      {% load static %}
+      <script src="{% static 'js/sketch.js' %}"></script>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Ventana emergente de felicitación y motivación -->
     <div
