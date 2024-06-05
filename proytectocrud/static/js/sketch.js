@@ -50,9 +50,15 @@ function draw() {
 }
 
 function modelReady() {
-  select("#status").html("model Loaded");
-  knnClassifier.load("myKNN.json", customModalReady);
+  //select("#status").html("model Loaded");
+  console.log("Model loaded successfully.");
+  knnClassifier.load("myKNN.json", customModalReady, function (error) {
+    if (error) {
+      console.error("Error loading myKNN.json:", error);
+    }
+  });
 }
+
 function customModalReady() {
   console.log("customModalReady");
 }

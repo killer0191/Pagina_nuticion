@@ -136,8 +136,7 @@
     </script>
   </head>
   <body>
-    {% extends 'base.html' %} {% block content %}
-
+    {% extends 'base.html' %} {% block content %} {% load static %}
     <main class="container py-5 gradient-bg main-content">
       <section class="card card-body card-section fade-in" id="singin-form">
         <div class="text-center mb-5">
@@ -149,11 +148,14 @@
               <div class="card card-body card-section inner-card">
                 <div class="card-header">
                   <img
-                    src="https://cdn1.iconfinder.com/data/icons/chunk/16/X-1024.png"
-                    alt="Icono "
-                    class="icon"
+                    src="{% static 'img/columna_icon.png' %}"
+                    alt="Icon"
+                    class="img-fluid"
+                    width="10%"
                   />
-                  <h2 class="card-title card-title-medium">Card 1 Title</h2>
+                  <h2 class="card-title card-title-medium">
+                    Columna Dorsolumbar
+                  </h2>
                 </div>
                 <div class="card-body">
                   <p class="card-text">
@@ -171,11 +173,12 @@
               <div class="card card-body card-section inner-card">
                 <div class="card-header">
                   <img
-                    src="https://cdn1.iconfinder.com/data/icons/chunk/16/X-1024.png"
-                    alt="Icono"
-                    class="icon"
+                    src="{% static 'img/brazo_icon.png' %}"
+                    alt="Icon"
+                    class="img-fluid"
+                    width="10%"
                   />
-                  <h2 class="card-title card-title-medium">Card 2 Title</h2>
+                  <h2 class="card-title card-title-medium">Day Brazos</h2>
                 </div>
                 <div class="card-body">
                   <p class="card-text">
@@ -193,11 +196,12 @@
               <div class="card card-body card-section inner-card">
                 <div class="card-header">
                   <img
-                    src="https://cdn1.iconfinder.com/data/icons/chunk/16/X-1024.png"
-                    alt="Icono"
-                    class="icon"
+                    src="{% static 'img/estiramiento_icon.png' %}"
+                    alt="Icon"
+                    class="img-fluid"
+                    width="10%"
                   />
-                  <h2 class="card-title card-title-medium">Card 3 Title</h2>
+                  <h2 class="card-title card-title-medium">Day Estiramiento</h2>
                 </div>
                 <div class="card-body">
                   <p class="card-text">
@@ -215,11 +219,12 @@
               <div class="card card-body card-section inner-card">
                 <div class="card-header">
                   <img
-                    src="https://cdn1.iconfinder.com/data/icons/chunk/16/X-1024.png"
-                    alt="Icono"
-                    class="icon"
+                    src="{% static 'img/hombro_icon.png' %}"
+                    alt="Icon"
+                    class="img-fluid"
+                    width="10%"
                   />
-                  <h2 class="card-title card-title-medium">Card 4 Title</h2>
+                  <h2 class="card-title card-title-medium">Day Hombros</h2>
                 </div>
                 <div class="card-body">
                   <p class="card-text">
@@ -236,11 +241,12 @@
               <div class="card card-body card-section inner-card">
                 <div class="card-header">
                   <img
-                    src="https://cdn1.iconfinder.com/data/icons/chunk/16/X-1024.png"
-                    alt="Icono "
-                    class="icon"
+                    src="{% static 'img/pierna_icon.png' %}"
+                    alt="Icon"
+                    class="img-fluid"
+                    width="10%"
                   />
-                  <h2 class="card-title card-title-medium">Card 5 Title</h2>
+                  <h2 class="card-title card-title-medium">Day Piernas</h2>
                 </div>
                 <div class="card-body">
                   <p class="card-text">
@@ -258,11 +264,12 @@
               <div class="card card-body card-section inner-card">
                 <div class="card-header">
                   <img
-                    src="https://cdn1.iconfinder.com/data/icons/chunk/16/X-1024.png"
-                    alt="Icono "
-                    class="icon"
+                    src="{% static 'img/hombro_codo_icon.png' %}"
+                    alt="Icon"
+                    class="img-fluid"
+                    width="10%"
                   />
-                  <h2 class="card-title card-title-medium">Card 6 Title</h2>
+                  <h2 class="card-title card-title-medium">Hombro-Codo</h2>
                 </div>
                 <div class="card-body">
                   <p class="card-text">
