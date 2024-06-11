@@ -168,23 +168,23 @@
     </script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const video = document.getElementById("video-preview");
+        const video = document.getElementById("videoContainer");
         const startBtn = document.getElementById("start-btn");
         const stopBtn = document.getElementById("stop-btn");
         let mediaRecorder;
         let chunks = [];
 
-        //startBtn.addEventListener("click", startRecording);
-        //stopBtn.addEventListener("click", stopRecording);
+        startBtn.addEventListener("click", startRecording);
+        stopBtn.addEventListener("click", stopRecording);
 
-        /*navigator.mediaDevices
+        navigator.mediaDevices
           .getUserMedia({ video: true })
           .then(function (stream) {
             video.srcObject = stream;
           })
           .catch(function (error) {
             console.error("Error al acceder a la cámara:", error);
-          });*/
+          });
 
         function startRecording() {
           chunks = [];
@@ -207,6 +207,8 @@
                 console.log(response); // Mostrar la respuesta en la consola
                 // Mostrar la ventana emergente de felicitación y motivación
                 $("#successModal").modal("show");
+                var audio = document.getElementById('successAudio');
+        audio.play()
               })
               .catch((error) => {
                 console.error("Error:", error);
@@ -312,6 +314,7 @@
             switch (exerciseTitle.toUpperCase()) {
               //dorsolumbar
               case "DORSOLUMBAR 1":
+                contador = 1;
                 gifSrc = "{% static 'img/columna/dorsolumbar1.gif' %}";
                 break;
               case "DORSOLUMBAR 2":
@@ -331,8 +334,7 @@
               case "BRAZOS ALAS":
                 gifSrc = "{% static 'img/brazo/brazos alas.gif' %}";
                 break;
-              case "BRAZOS ARRIBA Y ABAJO":
-              console.log("Bandera 1");
+              case "BRAZOS ARRIBA":
                 gifSrc = "{% static 'img/brazo/brazos arriba.gif' %}";
                 break;
               case "BRAZOS CRUZADOS":
@@ -348,30 +350,69 @@
                 gifSrc = "{% static 'img/brazo/ejercicio8.gif' %}";
                 break;
               
-                //estiramiento
-              case "ESTIRAMIENTO BRAZOS CRUZADOS":
+              //estiramiento
+              case "ESTIRAMIENTO 1":
                 gifSrc = "{% static 'img/estiramiento/estiramiento1.gif' %}";
                 break;
-              case "BRAZOS ARRIBA Y ABAJO":
-                gifSrc = "{% static 'img/brazo/brazos arriba.gif' %}";
+              case "ESTIRAMIENTO 2":
+                gifSrc = "{% static 'img/estiramiento/estiramiento de rodilla y brazos ej1.gif' %}";
                 break;
-              case "BRAZOS CRUZADOS":
-                gifSrc = "{% static 'img/brazo/brazos cruzados.gif' %}";
+              case "ESTIRAMIENTO 3":
+                gifSrc = "{% static 'img/estiramiento/estiramiento hombro.gif' %}";
                 break;
-              case "BRAZOS ESTIRADOS":
-                gifSrc = "{% static 'img/brazo/brazos estirados.gif' %}";
+              case "ESTIRAMINETO 4":
+                gifSrc = "{% static 'img/estiramiento/estiramineto  lateral.gif' %}";
                 break;
-              case "EJERCICIO 7":
-                gifSrc = "{% static 'img/brazo/ejercicio7.gif' %}";
-                break;
-              case "EJERCICIO 8":
-                gifSrc = "{% static 'img/brazo/ejercicio8.gif' %}";
+              case "ESTIRAMIENTO 5":
+                gifSrc = "{% static 'img/estiramiento/flexion de cuello lateral.gif' %}";
                 break;
 
-                //hombro
+              //hombro
+              case "ABDUCCION HOMBRO":
+                gifSrc = "{% static 'img/hombro/abduccion hombro.gif' %}";
+                break;
+              case "EJERCICIO 2":
+                gifSrc = "{% static 'img/hombro/flexion de hombro.gif' %}";
+                break;
+              case "EJERCICIO 3":
+                gifSrc = "{% static 'img/hombro/hombro compresionlateral.gif' %}";
+                break;
+              case "HOMBRO":
+                gifSrc = "{% static 'img/hombro/hombro.gif' %}";
+                break;
+              case "HOMBROS ATRAS":
+                gifSrc = "{% static 'img/hombro/hombrso atras.gif' %}";
+                break;
                 //hombro-codo
-                //pierna
-
+              //pierna
+              case "PIERNA 1":
+                gifSrc = "{% static 'img/pierna/ejercicio2.gif' %}";
+                break;
+              case "PIERNA 2":
+                gifSrc = "{% static 'img/pierna/ejercicio3.gif' %}";
+                break;
+              case "PIERNA 3":
+                gifSrc = "{% static 'img/pierna/ejercicio4.gif' %}";
+                break;
+              case "PIERNA 4":
+                gifSrc = "{% static 'img/pierna/ejercicio5.gif' %}";
+                break;
+              case "PIERNA 5":
+                gifSrc = "{% static 'img/pierna/ejercicio6.gif' %}";
+                break;
+             //Hombro-codo
+              case "HOMBRO CODO 1":
+                gifSrc = "{% static 'img/hombro_codo/hombrocodo1.gif' %}";
+                break;
+              case "HOMBRO CODO 2":
+                gifSrc = "{% static 'img/hombro_codo/hombrocodo2.gif' %}";
+                break;
+              case "HOMBRO CODO 3":
+                gifSrc = "{% static 'img/hombro_codo/hombrocodo3.gif' %}";
+                break;
+              case "HOMBRO CODO 4":
+                gifSrc = "{% static 'img/hombro_codo/hombrocodo4.gif' %}";
+                break;
               default:
                 gifSrc = "{% static 'img/pierna.gif' %}";
             }
@@ -401,8 +442,10 @@
 </div>
 </div>
 
-      
+      <button class="btn btn-primary" id="start-btn">Iniciar</button>
+  <button class="btn btn-danger" id="stop-btn" disabled>
       <div class="d-flex justify-content-center mb-4">
+         
         <button id="addClassA" class="btn btn-primary me-2">Add an Example to Class A</button>
         <button id="resetA" class="btn btn-danger">Reset Class A</button>
       </div>
@@ -427,6 +470,123 @@
 
       {% load static %}
 <script>
+  let contador =0;
+    const exerciseTitleElement = document.querySelector(".exercise-title");
+          const gifElement = document.getElementById("exercise-gif");
+          const urlParams = new URLSearchParams(window.location.search);
+          const exerciseTitle = urlParams.get("exercise_title");
+
+          if (exerciseTitle) {
+            exerciseTitleElement.textContent = exerciseTitle;
+
+            let gifSrc;
+            console.log("text: ", exerciseTitle.toUpperCase());
+            switch (exerciseTitle.toUpperCase()) {
+              //dorsolumbar
+              case "DORSOLUMBAR 1":
+                contador = 1;
+                break;
+              case "DORSOLUMBAR 2":
+                contador = 2;
+                break;
+              case "DORSOLUMBAR 3":
+                contador = 3;
+                break;
+              case "DORSOLUMBAR 4":
+                contador = 4;
+                break;
+              case "DORSOLUMBAR 5":
+                contador = 5;
+                break;
+
+                //brazo
+              case "BRAZOS ALAS":
+                contador = 6;
+                break;
+              case "BRAZOS ARRIBA":
+                contador = 7;
+                break;
+              case "BRAZOS CRUZADOS":
+                contador = 8;
+                break;
+              case "BRAZOS ESTIRADOS":
+                contador = 9;
+                break;
+              case "EJERCICIO 7":
+                contador = 10;
+                break;
+              case "EJERCICIO 8":
+                contador = 11;
+                break;
+              
+              //estiramiento
+              case "ESTIRAMIENTO 1":
+                contador = 12;
+                break;
+              case "ESTIRAMIENTO 2":
+                contador = 13;
+                break;
+              case "ESTIRAMIENTO 3":
+                contador = 14;
+                break;
+              case "ESTIRAMINETO 4":
+                contador = 15;
+                break;
+              case "ESTIRAMIENTO 5":
+                contador = 16;
+                break;
+
+              //hombro
+              case "ABDUCCION HOMBRO":
+                contador = 17;
+                break;
+              case "EJERCICIO 2":
+                contador = 18;
+                break;
+              case "EJERCICIO 3":
+                contador = 19;
+                break;
+              case "HOMBRO":
+                contador = 20;
+                break;
+              case "HOMBROS ATRAS":
+                contador = 21;
+                break;
+                //hombro-codo
+              //pierna
+              case "PIERNA 1":
+                contador = 22;
+                break;
+              case "PIERNA 2":
+                contador = 23;
+                break;
+              case "PIERNA 3":
+                contador = 24;
+                break;
+              case "PIERNA 4":
+                contador = 25;
+                break;
+              case "PIERNA 5":
+                contador = 26;
+                break;
+             //Hombro-codo
+              case "HOMBRO CODO 1":
+                contador = 27;
+                break;
+              case "HOMBRO CODO 2":
+                contador = 28;
+                break;
+              case "HOMBRO CODO 3":
+                contador = 29;
+                break;
+              case "HOMBRO CODO 4":
+                contador = 30;
+                break;
+              default:
+                contador = 0;
+            }
+          }
+  console.log("contador: ", contador);
   let video;
   // Create a KNN classifier
   const knnClassifier = ml5.KNNClassifier();
@@ -463,14 +623,113 @@
   // We can call both functions to draw all keypoints and the skeletons
   drawKeypoints();
   drawSkeleton();}
-  var jsonUrl = "{% static 'js/result/myKNN.json' %}";
+  var jsonUrl = "";
+  switch(contador){
+    case 1:
+      jsonUrl = "{% static 'json/dorsolumbar/dorsolumbar1/myKNN.json' %}";
+      break;
+    case 2:
+      jsonUrl = "{% static 'json/dorsolumbar/dorsolumbar2/myKNN.json' %}";
+      break;
+    case 3:
+      jsonUrl = "{% static 'json/dorsolumbar/dorsolumbar3/myKNN.json' %}";
+      break;
+    case 4:
+      jsonUrl = "{% static 'json/dorsolumbar/dorsolumbar4/myKNN.json' %}";
+      break;
+    case 5:
+      jsonUrl = "{% static 'json/dorsolumbar/dorsolumbar5/myKNN.json' %}";
+      break;
+    case 6:
+      jsonUrl = "{% static 'json/brazos/brazosalas.json' %}";
+      break;
+    case 7:
+      jsonUrl = "{% static 'json/brazos/brazosarriba.json' %}";
+      break;
+    case 8:
+      jsonUrl = "{% static 'json/brazos/brazoscruzados.json' %}";
+      break;
+    case 9:
+      jsonUrl = "{% static 'json/brazos/brazosestirados.json' %}";
+      break;
+    case 10:
+      jsonUrl = "{% static 'json/brazos/ejercicio7.json' %}";
+      break;
+    case 11:
+      jsonUrl = "{% static 'json/brazos/ejercicio8.json' %}";
+      break;
+    //estiramiento  
+    case 12:
+      jsonUrl = "{% static 'json/estiramiento/estiramiento1/myKNN.json' %}";
+      break;
+    case 13:
+      jsonUrl = "{% static 'json/estiramiento/estiramiento2/myKNN.json' %}";
+      break;
+    case 14:
+      jsonUrl = "{% static 'json/estiramiento/estiramiento3/myKNN.json' %}";
+      break;
+    case 15:
+      jsonUrl = "{% static 'json/estiramiento/estiramiento4/myKNN.json' %}";
+      break;
+    case 16:
+      jsonUrl = "{% static 'json/estiramiento/estiramiento5/myKNN.json' %}";
+      break;
+    //hombros
+    case 17:
+      jsonUrl = "{% static 'json/hombros/abduccionhombro/myKNN.json' %}";
+      break;
+    case 18:
+      jsonUrl = "{% static 'json/hombros/flexionhombro/myKNN.json' %}";
+      break;
+    case 19:
+      jsonUrl = "{% static 'json/hombros/hombrocompresionlateral/myKNN.json' %}";
+      break;
+    case 20:
+      jsonUrl = "{% static 'json/hombros/hombro/myKNN.json' %}";
+      break;
+    case 21:
+      jsonUrl = "{% static 'json/hombros/hombrsoatras/myKNN.json' %}";
+      break;
+    //pierna
+    case 22:
+      jsonUrl = "{% static 'json/piernas/ejercicio2/myKNN.json' %}";
+      break;
+    case 23:
+      jsonUrl = "{% static 'json/piernas/ejercicio3/myKNN.json' %}";
+      break;
+    case 24:
+      jsonUrl = "{% static 'json/piernas/ejercicio4/myKNN.json' %}";
+      break;
+    case 25:
+      jsonUrl = "{% static 'json/piernas/ejercicio5/myKNN.json' %}";
+      break;
+    case 26:
+      jsonUrl = "{% static 'json/piernas/ejercicio6/myKNN.json' %}";
+      break;
+    //hombro-codo
+    case 27:
+      jsonUrl = "{% static 'json/hombro-codo/hombrocodo1/myKNN.json' %}";
+      break;
+    case 28:
+      jsonUrl = "{% static 'json/hombro-codo/hombrocodo2/myKNN.json' %}";
+      break;
+    case 29:
+      jsonUrl = "{% static 'json/hombro-codo/hombrocodo3/myKNN.json' %}";
+      break;
+    case 30:
+      jsonUrl = "{% static 'json/hombro-codo/hombrocodo4/myKNN.json' %}";
+      break;
+    default:
+     jsonUrl = "{% static 'js/result/myKNN.json' %}";
+  }
+  
   function customModalReady() {
   console.log("customModalReady");}
     function modelReady() {
     //select("#status").html("model Loaded");
     knnClassifier.load(jsonUrl)
       .then(() => {
-        console.log("JSON loaded successfully");
+        console.log("JSON loaded successfully con la ruta", jsonUrl);
       })
       .catch(error => {
         console.error("Error loading JSON:", error);
@@ -741,6 +1000,7 @@ function drawSkeleton() {
         </div>
       </div>
     </div>
+    <audio id="successAudio" type="hidden" src="{% static 'mp3/final.mp3' %}" preload="auto"></audio>
 
     {% endblock %}
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
