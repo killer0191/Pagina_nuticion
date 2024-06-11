@@ -218,6 +218,10 @@
           mediaRecorder.start();
           startBtn.disabled = true;
           stopBtn.disabled = false;
+
+          // Iniciar la clasificación
+          classify();
+
           setTimeout(stopRecording, 10000); // Detener la grabación después de 10 segundos
         }
 
@@ -225,6 +229,9 @@
           mediaRecorder.stop();
           startBtn.disabled = false;
           stopBtn.disabled = true;
+
+          downloadResults();
+
           const blob = new Blob(chunks, { type: "video/webm" });
           const formData = new FormData();
           formData.append("video", blob, "grabacion.webm");
@@ -244,6 +251,12 @@
               console.error("Error:", error);
             });
         }
+        function downloadResults() {
+            download("A.txt", JSON.stringify(storeData.dataA));
+              download("B.txt", JSON.stringify(storeData.dataB));
+                download("result.txt", JSON.stringify(storeData.result));
+                  knnClassifier.save();
+}
       });
     </script>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
@@ -615,6 +628,8 @@
   poseNet.on("pose", function (results) {
     poses = results;
   });
+  
+  console.log("poses: ",poses)
   // Hide the video element, and just show the canvas
   video.hide();}
   function draw() {
@@ -753,7 +768,13 @@ function download(filename, text) {
 }
 
 // Add the current frame from the video to the classifier
+// Add the current frame from the video to the classifier
 function addExample(label) {
+  if (poses.length === 0 || !poses[0].pose) {
+    console.error("No poses detected");
+    return;
+  }
+
   // Convert poses results to a 2d array [[score0, x0, y0],...,[score16, x16, y16]]
   const poseArray = poses[0].pose.keypoints.map((p) => [
     p.score,
@@ -763,12 +784,10 @@ function addExample(label) {
   storeData[`data${label}`].push({ pose: poseArray });
 
   // Add an example with a label to the classifier
-  // Start file download.
-  //download(`${label}.txt`, JSON.stringify(poseArray));
-
   knnClassifier.addExample(poseArray, label);
   updateCounts();
 }
+
 
 // Predict the current frame.
 function classify() {
@@ -778,6 +797,11 @@ function classify() {
     console.error("There is no examples in any label");
     return;
   }
+  if (poses.length === 0 || !poses[0].pose) {
+    console.error("No poses detected");
+    return;
+  }
+
   // Convert poses results to a 2d array [[score0, x0, y0],...,[score16, x16, y16]]
   const poseArray = poses[0].pose.keypoints.map((p) => [
     p.score,
@@ -803,7 +827,7 @@ function createButtons() {
   // from the video with a label of "B" to the classifier
   buttonB = select("#addClassB");
   buttonB.mousePressed(function () {
-    addExample("B");
+    addExample('B');
   });
 
   // Reset buttons
